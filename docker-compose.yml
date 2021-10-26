@@ -10,7 +10,7 @@ services:
       context: ./
       dockerfile: Dockerfile
     image: laravel-app
-    restart: unless-stopped
+#    restart: unless-stopped
     working_dir: /var/www/
     volumes:
       - ./:/var/www
@@ -20,7 +20,7 @@ services:
   # Nginx Service
   nginx:
     image: nginx:alpine
-    restart: unless-stopped
+#    restart: unless-stopped
     ports:
       - 80:80
     volumes:
@@ -32,7 +32,7 @@ services:
   # Mysql Service
   db:
     image: mysql:8
-    restart: unless-stopped
+#    restart: unless-stopped
     environment:
       MYSQL_DATABASE: laravel
       MYSQL_ROOT_PASSWORD: laravel
