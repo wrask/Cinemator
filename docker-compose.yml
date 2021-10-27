@@ -3,6 +3,7 @@ services:
 
  # Laravel App
   phpfpm:
+    container_name: app
     build:
       args:
         user: romandunik
@@ -19,6 +20,7 @@ services:
     
   # Nginx Service
   nginx:
+    container_name: nginx
     image: nginx:alpine
 #    restart: unless-stopped
     ports:
@@ -31,6 +33,7 @@ services:
   
   # Mysql Service
   db:
+    container_name: db
     image: mysql:8
 #    restart: unless-stopped
     environment:
