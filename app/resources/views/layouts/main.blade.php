@@ -9,7 +9,7 @@
 </head>
 <body class="font-sans bg-gray-900 text-white">
     <nav class="border-b border-gray-800">
-        <div class="container mx-auto flex items-center justify-content-between px-4 py-6">
+        <div class="container mx-auto flex items-center justify-between px-4 py-6">
             <ul class="flex items-center">
                 <li>
                     <a href="#">
@@ -26,6 +26,11 @@
                     <a href="#" class="hover:text-gray-300">Actors</a>
                 </li>
             </ul>
+            <div class="flex items-center">
+                <div class="relative">
+                    <input type="text" class="bg-gray-800 rounded-full w-64 px-4 py-1" placeholder="Search">
+                </div>
+            </div>
         </div>
     </nav>
     @yield('content')

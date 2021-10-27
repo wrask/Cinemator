@@ -16,5 +16,5 @@ mix.js('resources/js/app.js', 'public/js')
         require('tailwindcss'),
     ])
 
-mix.browserSync('http://laravel.loc/');
+mix.browserSync('http://cinemator.loc/');
 
