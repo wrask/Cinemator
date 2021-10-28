@@ -11,6 +11,7 @@ services:
       context: ./
       dockerfile: Dockerfile
     image: laravel-app
+    tty: true
 #    restart: unless-stopped
     working_dir: /var/www/
     volumes:
