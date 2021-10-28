@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Http;
@@ -44,6 +47,24 @@ class MoviesController extends Controller
     const GENRES_LIST_API_REQUEST = 'genre/movie/list';
 
     /**
+     * Append to request
+     *
+     * @var string
+     */
+    const APPEND_TO_RESPONSE = '?append_to_response=';
+
+    /**
+     * Request parameters to append
+     *
+     * @var array
+     */
+    const REQUEST_PARAMETERS_TO_APPEND = [
+        'credits',
+        'videos',
+        'images',
+    ];
+
+    /**
      * Display a listing of the resource.
      *
      * @return Response
@@ -67,7 +88,7 @@ class MoviesController extends Controller
             return [$genre['id'] => $genre['name']];
         });
 
-        dump($nowPlayingMovies);
+//        dump($nowPlayingMovies);
 
         return view('index', [
             'popularMovies' => $popularMovies,
@@ -101,11 +122,23 @@ class MoviesController extends Controller
      * Display the specified resource.
      *
      * @param int $id
-     * @return void
+     * @return Application|Factory|View
      */
-    public function show(int $id): void
+    public function show(int $id)
     {
-        //
+        $movie = Http::withToken(config(self::TMDB_TOKEN))
+            ->get(
+                self::TMDB_V3_ENDPOINT .
+                'movie/' . $id .
+                self::APPEND_TO_RESPONSE .
+                implode(',', self::REQUEST_PARAMETERS_TO_APPEND))
+            ->json();
+
+//        dump($movie);
+
+        return view('show', [
+            'movie' => $movie
+        ]);
     }
 
     /**
