@@ -30,6 +30,13 @@ class MoviesController extends Controller
     const POPULAR_MOVIES_API_REQUEST = 'movie/popular';
 
     /**
+     * Now playing movies api request
+     *
+     * @var string
+     */
+    const NOW_PLAYING_MOVIES_API_REQUEST = '/movie/now_playing';
+
+    /**
      * Genres movies list api request
      *
      * @var string
@@ -48,6 +55,10 @@ class MoviesController extends Controller
             ->get(self::TMDB_V3_ENDPOINT . self::POPULAR_MOVIES_API_REQUEST)
             ->json('results');
 
+        $nowPlayingMovies = Http::withToken(config(self::TMDB_TOKEN))
+            ->get(self::TMDB_V3_ENDPOINT . self::NOW_PLAYING_MOVIES_API_REQUEST)
+            ->json('results');
+
         $genres= Http::withToken(config(self::TMDB_TOKEN))
             ->get(self::TMDB_V3_ENDPOINT . self::GENRES_LIST_API_REQUEST)
             ->json('genres');
@@ -56,10 +67,11 @@ class MoviesController extends Controller
             return [$genre['id'] => $genre['name']];
         });
 
-        dump($popularMovies);
+        dump($nowPlayingMovies);
 
         return view('index', [
             'popularMovies' => $popularMovies,
+            'nowPlayingMovies' => $nowPlayingMovies,
             'genres' => $genres,
         ]);
     }
