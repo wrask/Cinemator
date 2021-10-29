@@ -19,10 +19,14 @@ tests:
 	@echo "running feature tests ..."
 	docker exec app /var/www/app/vendor/phpunit/phpunit/phpunit /var/www/app/tests/Feature
 
-# ## Start feature tests
-# artisan tests:
-# 	@echo "running feature tests ..."
-# 	docker exec app app/artisan test
+## Make a controller
+mc:
+	@echo "creating a controller ..."
+	docker exec app app/artisan make:controller "$@"
+
+## Composer
+composer:
+	docker exec app composer install
 
 help:
 	@grep -E '^[a-zA-Z_0-9-]+:.*?## .*$$' makefile | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'

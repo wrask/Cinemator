@@ -1,5 +1,6 @@
 {
     "require": {
-        "livewire/livewire": "^2.7"
+        "livewire/livewire": "^2.7",
+        "spatie/laravel-view-models": "^1.3"
     }
 }

@@ -2,6 +2,8 @@
 
 namespace App\View\Components;
 
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Collection;
 use Illuminate\View\Component;
@@ -9,33 +11,25 @@ use Illuminate\View\Component;
 class MovieCard extends Component
 {
     /**
-     * @var array
-     */
-    public array $movie;
-
-    /**
      * @var Collection
      */
-    public Collection $genres;
+    public Collection $movie;
 
     /**
      * Create a new component instance.
      *
-     * @param array $movie
-     * @param Collection $genres
+     * @param Collection $movie
      */
     public function __construct(
-        array $movie,
-        Collection $genres
+        Collection $movie
     ) {
         $this->movie = $movie;
-        $this->genres = $genres;
     }
 
     /**
      * Get the view / contents that represent the component.
      *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|View
+     * @return Application|Factory|View
      */
     public function render()
     {

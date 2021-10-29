@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\ViewModels\MoviesViewModel;
+use App\ViewModels\MovieViewModel;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -84,17 +86,13 @@ class MoviesController extends Controller
             ->get(self::TMDB_V3_ENDPOINT . self::GENRES_LIST_API_REQUEST)
             ->json('genres');
 
-        $genres = collect($genres)->mapWithKeys(function ($genre) {
-            return [$genre['id'] => $genre['name']];
-        });
+        $moviesViewModel = new MoviesViewModel(
+            $popularMovies,
+            $nowPlayingMovies,
+            $genres
+        );
 
-//        dump($nowPlayingMovies);
-
-        return view('index', [
-            'popularMovies' => $popularMovies,
-            'nowPlayingMovies' => $nowPlayingMovies,
-            'genres' => $genres,
-        ]);
+        return view('index', $moviesViewModel);
     }
 
     /**
@@ -134,11 +132,9 @@ class MoviesController extends Controller
                 implode(',', self::REQUEST_PARAMETERS_TO_APPEND))
             ->json();
 
-//        dump($movie);
+        $movieViewModel = new MovieViewModel($movie);
 
-        return view('show', [
-            'movie' => $movie
-        ]);
+        return view('show', $movieViewModel);
     }
 
     /**
