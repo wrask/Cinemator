@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\ViewModels\MoviesViewModel;
-use App\ViewModels\MovieViewModel;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
+use App\ViewModels\TvViewModel;
+use App\ViewModels\TvShowViewModel;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Http;
 
-class MoviesController extends Controller
+class TvController extends Controller
 {
     /**
      * TMDB token
@@ -28,25 +28,25 @@ class MoviesController extends Controller
     const TMDB_V3_ENDPOINT = 'https://api.themoviedb.org/3/';
 
     /**
-     * Popular movies api request
+     * TV popular api request
      *
      * @var string
      */
-    const POPULAR_MOVIES_API_REQUEST = 'movie/popular';
+    const TV_POPULAR_API_REQUEST = 'tv/popular';
 
     /**
-     * Now playing movies api request
+     * TV top rated api request
      *
      * @var string
      */
-    const NOW_PLAYING_MOVIES_API_REQUEST = '/movie/now_playing';
+    const TV_TOP_RATED_API_REQUEST = 'tv/top_rated';
 
     /**
-     * Genres movies list api request
+     * Genre tv list api api request
      *
      * @var string
      */
-    const GENRES_LIST_API_REQUEST = 'genre/movie/list';
+    const GENRE_TV_LIST_API_REQUEST = 'genre/tv/list';
 
     /**
      * Append to request
@@ -67,40 +67,37 @@ class MoviesController extends Controller
     ];
 
     /**
-     * Display a listing of the resource.
-     *
-     * @return Response
-     * @throws \Exception
+     * @return Application|Factory|View
      */
     public function index()
     {
-        $popularMovies = Http::withToken(config(self::TMDB_TOKEN))
-            ->get(self::TMDB_V3_ENDPOINT . self::POPULAR_MOVIES_API_REQUEST)
+        $popularTv = Http::withToken(config(self::TMDB_TOKEN))
+            ->get(self::TMDB_V3_ENDPOINT . self::TV_POPULAR_API_REQUEST)
             ->json('results');
 
-        $nowPlayingMovies = Http::withToken(config(self::TMDB_TOKEN))
-            ->get(self::TMDB_V3_ENDPOINT . self::NOW_PLAYING_MOVIES_API_REQUEST)
+        $topRatedTv = Http::withToken(config(self::TMDB_TOKEN))
+            ->get(self::TMDB_V3_ENDPOINT . self::TV_TOP_RATED_API_REQUEST)
             ->json('results');
 
-        $genres= Http::withToken(config(self::TMDB_TOKEN))
-            ->get(self::TMDB_V3_ENDPOINT . self::GENRES_LIST_API_REQUEST)
+        $genres = Http::withToken(config(self::TMDB_TOKEN))
+            ->get(self::TMDB_V3_ENDPOINT . self::GENRE_TV_LIST_API_REQUEST)
             ->json('genres');
 
-        $moviesViewModel = new MoviesViewModel(
-            $popularMovies,
-            $nowPlayingMovies,
-            $genres
+        $viewModel = new TvViewModel(
+            $popularTv,
+            $topRatedTv,
+            $genres,
         );
 
-        return view('movies.index', $moviesViewModel);
+        return view('tv.index', $viewModel);
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return void
+     * @return Response
      */
-    public function create(): void
+    public function create()
     {
         //
     }
@@ -109,41 +106,39 @@ class MoviesController extends Controller
      * Store a newly created resource in storage.
      *
      * @param Request $request
-     * @return void
+     * @return Response
      */
-    public function store(Request $request): void
+    public function store(Request $request)
     {
         //
     }
 
     /**
-     * Display the specified resource.
-     *
      * @param int $id
      * @return Application|Factory|View
      */
     public function show(int $id)
     {
-        $movie = Http::withToken(config(self::TMDB_TOKEN))
+        $tvShow = Http::withToken(config(self::TMDB_TOKEN))
             ->get(
                 self::TMDB_V3_ENDPOINT .
-                'movie/' . $id .
+                'tv/' . $id .
                 self::APPEND_TO_RESPONSE .
                 implode(',', self::REQUEST_PARAMETERS_TO_APPEND))
             ->json();
 
-        $movieViewModel = new MovieViewModel($movie);
+        $tvShowViewModel = new TvShowViewModel($tvShow);
 
-        return view('movies.show', $movieViewModel);
+        return view('tv.show', $tvShowViewModel);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param int $id
-     * @return void
+     * @param  int  $id
+     * @return Response
      */
-    public function edit(int $id): void
+    public function edit($id)
     {
         //
     }
@@ -152,10 +147,10 @@ class MoviesController extends Controller
      * Update the specified resource in storage.
      *
      * @param Request $request
-     * @param int $id
-     * @return void
+     * @param  int  $id
+     * @return Response
      */
-    public function update(Request $request, int $id): void
+    public function update(Request $request, $id)
     {
         //
     }
@@ -163,10 +158,10 @@ class MoviesController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param int $id
-     * @return void
+     * @param  int  $id
+     * @return Response
      */
-    public function destroy(int $id): void
+    public function destroy($id)
     {
         //
     }
