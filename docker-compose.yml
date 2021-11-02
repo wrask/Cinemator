@@ -31,17 +31,17 @@ services:
       - ./config/nginx/conf.d:/etc/nginx/conf.d/
     networks:
       - laravel-network
-  
-  # Mysql Service
+
+  # Postgres Service
   db:
-    container_name: db
-    image: mysql:8
+    image: postgres:14
 #    restart: unless-stopped
     environment:
-      MYSQL_DATABASE: laravel
-      MYSQL_ROOT_PASSWORD: laravel
-      MYSQL_PASSWORD: laravel
-      MYSQL_USER: laravel
+      - POSTGRES_USER=laravel
+      - POSTGRES_PASSWORD=laravel
+      - POSTGRES_DB=laravel
+    ports:
+      - "5432:5432"
     networks:
       - laravel-network
       
