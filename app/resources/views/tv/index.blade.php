@@ -8,7 +8,6 @@
                 @foreach ($popularTv as $tvShow)
                     <x-tv-card :tvShow="$tvShow" />
                 @endforeach
-
             </div>
         </div>
         <div class="top-rated-shows py-24">

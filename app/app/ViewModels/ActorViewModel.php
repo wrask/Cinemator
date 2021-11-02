@@ -44,6 +44,62 @@ class ActorViewModel extends ViewModel
     const KNOWN_FOR_MOVIES_NUMBER = 5;
 
     /**
+     * Future release date
+     *
+     * @var string
+     */
+    const FUTURE_RELEASE_DATE = 'Future';
+
+    /**
+     * Release date format
+     *
+     * @var string
+     */
+    const RELEASE_DATE_FORMAT = 'Y';
+
+    /**
+     * Untitled movie name
+     *
+     * @var string
+     */
+    const UNTITLED_MOVIE_NAME = 'Untitled';
+
+    /**
+     * Actor image path
+     *
+     * @var string
+     */
+    const ACTOR_IMAGE_PATH = 'https://image.tmdb.org/t/p/w300/';
+
+    /**
+     * Actor image placeholder path
+     *
+     * @var string
+     */
+    const ACTOR_IMAGE_PLACEHOLDER_PATH = 'https://via.placeholder.com/300x450';
+
+    /**
+     * Poster image path
+     *
+     * @var string
+     */
+    const POSTER_IMAGE_PATH = 'https://image.tmdb.org/t/p/w185';
+
+    /**
+     * Poster placeholder path
+     *
+     * @var string
+     */
+    const POSTER_PLACEHOLDER_PATH = 'https://via.placeholder.com/185x278';
+
+    /**
+     * Movie media type
+     *
+     * @var string
+     */
+    const MOVIE_MEDIA_TYPE = 'movie';
+
+    /**
      * @var array
      */
     public array $actor;
@@ -76,7 +132,7 @@ class ActorViewModel extends ViewModel
     }
 
     /**
-     * Gets social collection
+     * Gets actors collection
      *
      * @return Collection
      */
@@ -86,10 +142,11 @@ class ActorViewModel extends ViewModel
             'birthday' => Carbon::parse($this->actor['birthday'])->format(self::DATE_FORMAT),
             'age' => Carbon::parse($this->actor['birthday'])->age,
             'profile_path' => $this->actor['profile_path']
-                ? 'https://image.tmdb.org/t/p/w300/'.$this->actor['profile_path']
-                : 'https://via.placeholder.com/300x450',
+                ? self::ACTOR_IMAGE_PATH . $this->actor['profile_path']
+                : self::ACTOR_IMAGE_PLACEHOLDER_PATH,
         ])->only([
-            'birthday', 'age', 'profile_path', 'name', 'id', 'homepage', 'place_of_birth', 'biography'
+            'birthday', 'age', 'profile_path', 'name',
+            'id', 'homepage', 'place_of_birth', 'biography'
         ]);
     }
 
@@ -129,8 +186,8 @@ class ActorViewModel extends ViewModel
 
             return collect($movie)->merge([
                 'poster_path' => $movie['poster_path']
-                    ? 'https://image.tmdb.org/t/p/w185' . $movie['poster_path']
-                    : 'https://via.placeholder.com/185x278',
+                    ? self::POSTER_IMAGE_PATH . $movie['poster_path']
+                    : self::POSTER_PLACEHOLDER_PATH,
                 'title' => $title,
                 'linkToPage' => $movie['media_type'] === 'movie' ?
                     route('movies.show', $movie['id']) :
@@ -164,15 +221,17 @@ class ActorViewModel extends ViewModel
             } elseif (isset($movie['name'])) {
                 $title = $movie['name'];
             } else {
-                $title = 'Untitled';
+                $title = self::UNTITLED_MOVIE_NAME;
             }
 
             return collect($movie)->merge([
                 'release_date' => $releaseDate,
-                'release_year' => isset($releaseDate) ? Carbon::parse($releaseDate)->format('Y') : 'Future',
+                'release_year' => isset($releaseDate) ?
+                    Carbon::parse($releaseDate)->format(self::RELEASE_DATE_FORMAT) :
+                    self::FUTURE_RELEASE_DATE,
                 'title' => $title,
                 'character' => $movie['character'] ?? '',
-                'linkToPage' => $movie['media_type'] == 'movie' ?
+                'linkToPage' => $movie['media_type'] == self::MOVIE_MEDIA_TYPE ?
                     route('movies.show', $movie['id']) :
                     route('tv.show', $movie['id']),
             ])->only([

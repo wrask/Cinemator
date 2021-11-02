@@ -3,6 +3,7 @@
 namespace App\ViewModels;
 
 use Carbon\Carbon;
+use Illuminate\Support\Collection;
 use Spatie\ViewModels\ViewModel;
 
 class TvViewModel extends ViewModel
@@ -14,40 +15,84 @@ class TvViewModel extends ViewModel
      */
     const DATE_FORMAT = 'M d, Y';
 
-    public $popularTv;
+    /**
+     * Poster path
+     *
+     * @var string
+     */
+    const POSTER_PATH = 'https://image.tmdb.org/t/p/w500/';
 
-    public $topRatedTv;
+    /**
+     * @var array
+     */
+    public array $popularTv;
 
-    public $genres;
+    /**
+     * @var array
+     */
+    public array $topRatedTv;
 
+    /**
+     * @var array
+     */
+    public array $genres;
+
+    /**
+     * TvViewModel constructor.
+     *
+     * @param array $popularTv
+     * @param array $topRatedTv
+     * @param array $genres
+     */
     public function __construct(
-        $popularTv,
-        $topRatedTv,
-        $genres
+        array $popularTv,
+        array $topRatedTv,
+        array $genres
     ) {
         $this->popularTv = $popularTv;
         $this->topRatedTv = $topRatedTv;
         $this->genres = $genres;
     }
 
-    public function popularTv()
+    /**
+     * Gets popular tvs collection
+     *
+     * @return Collection
+     */
+    public function popularTv(): Collection
     {
         return $this->formatTv($this->popularTv);
     }
 
-    public function topRatedTv()
+    /**
+     * Gets popular toprated tv collection
+     *
+     * @return Collection
+     */
+    public function topRatedTv(): Collection
     {
         return $this->formatTv($this->topRatedTv);
     }
 
-    public function genres()
+    /**
+     * Gets genres collection
+     *
+     * @return Collection
+     */
+    public function genres(): Collection
     {
         return collect($this->genres)->mapWithKeys(function ($genre) {
             return [$genre['id'] => $genre['name']];
         });
     }
 
-    private function formatTv($tv)
+    /**
+     * Gets formatted tvs collection
+     *
+     * @param array $tv
+     * @return Collection
+     */
+    private function formatTv(array $tv): Collection
     {
         return collect($tv)->map(function($tvShow) {
             $formattedGenres = collect($tvShow['genre_ids'])->mapWithKeys(function($value) {
@@ -55,7 +100,7 @@ class TvViewModel extends ViewModel
             })->implode(', ');
 
             return collect($tvShow)->merge([
-                'poster_path' => 'https://image.tmdb.org/t/p/w500/' . $tvShow['poster_path'],
+                'poster_path' => self::POSTER_PATH . $tvShow['poster_path'],
                 'vote_average' => $tvShow['vote_average'] * 10 .'%',
                 'first_air_date' => Carbon::parse($tvShow['first_air_date'])->format(self::DATE_FORMAT),
                 'genres' => $formattedGenres,

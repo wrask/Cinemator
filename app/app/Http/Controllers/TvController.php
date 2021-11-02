@@ -67,9 +67,11 @@ class TvController extends Controller
     ];
 
     /**
+     * Display the specified resource
+     *
      * @return Application|Factory|View
      */
-    public function index()
+    public function index(): View|Factory|Application
     {
         $popularTv = Http::withToken(config(self::TMDB_TOKEN))
             ->get(self::TMDB_V3_ENDPOINT . self::TV_POPULAR_API_REQUEST)
@@ -114,10 +116,12 @@ class TvController extends Controller
     }
 
     /**
+     * Display the specified resource
+     *
      * @param int $id
      * @return Application|Factory|View
      */
-    public function show(int $id)
+    public function show(int $id): View|Factory|Application
     {
         $tvShow = Http::withToken(config(self::TMDB_TOKEN))
             ->get(

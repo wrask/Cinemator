@@ -2,20 +2,24 @@
 
 namespace App\View\Components;
 
+use Illuminate\Support\Collection;
 use Illuminate\View\Component;
 use Illuminate\View\View;
 
 class TvCard extends Component
 {
-    public $tvShow;
+    /**
+     * @var Collection
+     */
+    public Collection $tvShow;
 
     /**
-     * Create a new component instance.
+     * TvCard constructor.
      *
-     * @return void
+     * @param Collection $tvShow
      */
     public function __construct(
-        $tvShow
+        Collection $tvShow
     ) {
         $this->tvShow = $tvShow;
     }

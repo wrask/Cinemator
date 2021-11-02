@@ -22,6 +22,13 @@ class ActorsViewModel extends ViewModel
     const IMAGES_API_ENDPOINT = 'https://image.tmdb.org/t/p/w235_and_h235_face';
 
     /**
+     * Actor avatar placeholder path
+     *
+     * @var string
+     */
+    const ACTOR_AVATAR_PLACEHOLDER_PATH = 'https://ui-avatars.com/api/?size=235&name';
+
+    /**
      * Max actors pages number
      *
      * @var int
@@ -63,7 +70,7 @@ class ActorsViewModel extends ViewModel
             return collect($actor)->merge([
                 'profile_path' => $actor['profile_path'] ?
                     self::IMAGES_API_ENDPOINT . $actor['profile_path'] :
-                    'https://ui-avatars.com/api/?size=235&name=' . $actor['name'],
+                    self::ACTOR_AVATAR_PLACEHOLDER_PATH . $actor['name'],
                 'known_for' => collect($actor['known_for'])->where('media_type', 'movie')->pluck('title')->union(
                     collect($actor['known_for'])->where('media_type', 'tv')->pluck('name')
                 )->implode(', '),

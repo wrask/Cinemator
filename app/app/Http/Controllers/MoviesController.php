@@ -69,10 +69,10 @@ class MoviesController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return Response
+     * @return Application|Factory|View
      * @throws \Exception
      */
-    public function index()
+    public function index(): View|Factory|Application
     {
         $popularMovies = Http::withToken(config(self::TMDB_TOKEN))
             ->get(self::TMDB_V3_ENDPOINT . self::POPULAR_MOVIES_API_REQUEST)
@@ -117,12 +117,12 @@ class MoviesController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified resource
      *
      * @param int $id
      * @return Application|Factory|View
      */
-    public function show(int $id)
+    public function show(int $id): View|Factory|Application
     {
         $movie = Http::withToken(config(self::TMDB_TOKEN))
             ->get(

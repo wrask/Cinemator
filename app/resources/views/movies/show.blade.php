@@ -1,7 +1,6 @@
 @extends('layouts.main')
 
 @section('content')
-
     <div class="movie-info border-b border-gray-800">
         <div class="container mx-auto px-4 py-16 flex flex-col md:flex-row">
             <img src="{{ $movie['poster_path'] }}" alt="parasite" class="w-64 md:w-96">
@@ -36,7 +35,6 @@
                         @endforeach
                     </div>
                 </div>
-
                 <div x-data="{ isOpen: false }">
                     @if (count($movie['videos']['results']) > 0)
                         <div class="mt-12">
@@ -48,7 +46,6 @@
                                 <span class="ml-2">Play Trailer</span>
                             </button>
                         </div>
-
                         <template x-if="isOpen">
                             <div
                                 style="background-color: rgba(0, 0, 0, .5);"
@@ -77,7 +74,6 @@
             </div>
         </div>
     </div>
-
     <div class="movie-cast border-b border-gray-800">
         <div class="container mx-auto px-4 py-16">
             <h2 class="text-4xl font-semibold">Cast</h2>

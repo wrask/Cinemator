@@ -63,10 +63,24 @@ class ActorsController extends Controller
     const NO_CONTENT_RESPONSE_CODE = 204;
 
     /**
+     * External ids api parameter
+     *
+     * @var string
+     */
+    const EXTERNAL_IDS_API_PARAMETER = '/external_ids';
+
+    /**
+     * Combined credits api parameter
+     *
+     * @var string
+     */
+    const COMBINED_CREDITS_API_PARAMETER = '/combined_credits';
+
+    /**
      * @param int $page
      * @return Application|Factory|View
      */
-    public function index(int $page = 1)
+    public function index(int $page = 1): View|Factory|Application
     {
         @abort_if($page > self::MAX_ACTORS_PAGES_NUMBER, self::NO_CONTENT_RESPONSE_CODE);
 
@@ -106,21 +120,33 @@ class ActorsController extends Controller
     }
 
     /**
+     * Show actor controller
+     *
      * @param int $actorId
      * @return Application|Factory|View
      */
-    public function show(int $actorId)
+    public function show(int $actorId): View|Factory|Application
     {
         $actor = Http::withToken(config(self::TMDB_TOKEN))
             ->get(self::TMDB_V3_ENDPOINT . self::PERSON_API_REQUEST . $actorId)
             ->json();
 
         $social = Http::withToken(config(self::TMDB_TOKEN))
-            ->get(self::TMDB_V3_ENDPOINT . self::PERSON_API_REQUEST . $actorId. '/external_ids')
+            ->get(
+                self::TMDB_V3_ENDPOINT .
+                self::PERSON_API_REQUEST .
+                $actorId .
+                self::EXTERNAL_IDS_API_PARAMETER
+            )
             ->json();
 
         $credits = Http::withToken(config(self::TMDB_TOKEN))
-            ->get(self::TMDB_V3_ENDPOINT . self::PERSON_API_REQUEST . $actorId . '/combined_credits')
+            ->get(
+                self::TMDB_V3_ENDPOINT .
+                self::PERSON_API_REQUEST .
+                $actorId .
+                self::COMBINED_CREDITS_API_PARAMETER
+            )
             ->json();
 
         $actorViewModel = new ActorViewModel($actor, $social, $credits);
