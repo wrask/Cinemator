@@ -22,7 +22,6 @@ class ActorViewModel extends ViewModel
      */
     const TWITTER_URL = 'https://twitter.com/';
 
-
     /**
      * Facebook url
      *
@@ -44,16 +43,32 @@ class ActorViewModel extends ViewModel
      */
     const KNOWN_FOR_MOVIES_NUMBER = 5;
 
-    public $actor;
+    /**
+     * @var array
+     */
+    public array $actor;
 
-    public $social;
+    /**
+     * @var array
+     */
+    public array $social;
 
-    public $credits;
+    /**
+     * @var array
+     */
+    public array $credits;
 
+    /**
+     * ActorViewModel constructor.
+     *
+     * @param array $actor
+     * @param array $social
+     * @param array $credits
+     */
     public function __construct(
-        $actor,
-        $social,
-        $credits
+        array $actor,
+        array $social,
+        array $credits
     ) {
         $this->actor = $actor;
         $this->social = $social;

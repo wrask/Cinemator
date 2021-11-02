@@ -83,13 +83,13 @@ class TvController extends Controller
             ->get(self::TMDB_V3_ENDPOINT . self::GENRE_TV_LIST_API_REQUEST)
             ->json('genres');
 
-        $viewModel = new TvViewModel(
+        $tvViewModel = new TvViewModel(
             $popularTv,
             $topRatedTv,
             $genres,
         );
 
-        return view('tv.index', $viewModel);
+        return view('tv.index', $tvViewModel);
     }
 
     /**
