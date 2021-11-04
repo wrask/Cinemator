@@ -24,6 +24,18 @@ mc:
 	@echo "creating a controller ..."
 	docker exec app app/artisan make:controller "$@"
 
+## Enable maintenance mode
+me:
+	@echo "enabling the maintenance mode ..."
+	docker exec app app/artisan down
+##	docker exec app app/artisan down --secret="1630542a-246b-4b66-afa1-dd72a4c43515"
+
+
+## Disable maintenance mode
+md:
+	@echo "disabling the maintenance mode ..."
+	docker exec app app/artisan up
+
 ## Composer
 composer:
 	docker exec app composer install
