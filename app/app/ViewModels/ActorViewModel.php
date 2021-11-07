@@ -83,7 +83,7 @@ class ActorViewModel extends ViewModel
      *
      * @var string
      */
-    const POSTER_IMAGE_PATH = 'https://image.tmdb.org/t/p/w185';
+    const POSTER_IMAGE_PATH = 'https://image.tmdb.org/t/p/w300';
 
     /**
      * Poster placeholder path

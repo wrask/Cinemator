@@ -13,7 +13,7 @@ class MovieViewModel extends ViewModel
      *
      * @var int
      */
-    const CREW_MEMBERS_NUMBER = 5;
+    const CREW_MEMBERS_NUMBER = 3;
 
     /**
      * Cast number
