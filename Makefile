@@ -20,7 +20,7 @@ build:
 ## Make a controller
 mc:
 	@echo "creating a controller ..."
-	docker ecec $$APP_CONTAINER php app/artisan make:controller $(controller_name)
+	docker exec $$APP_CONTAINER php app/artisan make:controller $(controller_name)
 
 ## Start feature tests
 tests:

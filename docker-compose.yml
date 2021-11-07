@@ -6,8 +6,8 @@ services:
     container_name: ${APP_CONTAINER}
     build:
       args:
-        user: romandunik
-        uid: 1000
+        user: ${LOCAL_USER}
+        uid: ${LOCAL_UID}
       context: ./
       dockerfile: Dockerfile
     tty: true
@@ -22,7 +22,7 @@ services:
     container_name: ${WEB_CONTAINER}
     image: nginx:alpine
     ports:
-      - 80:80
+      - ${WEB_PORT}:80
     volumes:
       - ./:/var/www
       - ./config/nginx/conf.d:/etc/nginx/conf.d/
