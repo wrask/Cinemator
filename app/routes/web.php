@@ -12,3 +12,7 @@ Route::get('/actors', 'App\Http\Controllers\ActorsController@index')->name('acto
 Route::get('/actors/page/{page?}', 'App\Http\Controllers\ActorsController@index');
 
 Route::get('/actors/{actor}', 'App\Http\Controllers\ActorsController@show')->name('actors.show');
+
+Route::get('/debug-sentry', function () {
+    throw new Exception('My first Sentry error!');
+});
