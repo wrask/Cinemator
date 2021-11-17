@@ -11,20 +11,13 @@ use Illuminate\View\Component;
 class MovieCard extends Component
 {
     /**
-     * @var Collection
-     */
-    public Collection $movie;
-
-    /**
      * Create a new component instance.
      *
      * @param Collection $movie
      */
     public function __construct(
-        Collection $movie
-    ) {
-        $this->movie = $movie;
-    }
+        public Collection $movie,
+    ) {}
 
     /**
      * Get the view / contents that represent the component.

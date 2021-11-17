@@ -36,28 +36,15 @@ class ActorsViewModel extends ViewModel
     const MAX_ACTORS_PAGES_NUMBER = 500;
 
     /**
-     * @var array
-     */
-    public array $popularActors;
-
-    /**
-     * @var int
-     */
-    public int $page;
-
-    /**
      * ActorsViewModel constructor.
      *
      * @param array $popularActors
      * @param int $page
      */
     public function __construct(
-        array $popularActors,
-        int $page
-    ) {
-        $this->popularActors = $popularActors;
-        $this->page = $page;
-    }
+        public array $popularActors,
+        public int $page,
+    ) {}
 
     /**
      * Gets popular actors

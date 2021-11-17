@@ -23,22 +23,6 @@ class MoviesViewModel extends ViewModel
     const IMAGES_API_ENDPOINT = 'https://image.tmdb.org/t/p/w500/';
 
     /**
-     * @var array
-     */
-    public array $popularMovies;
-
-    /**
-     * @var array
-     */
-    public array $nowPlayingMovies;
-
-
-    /**
-     * @var array
-     */
-    public array $genres;
-
-    /**
      * MoviesViewModel constructor.
      *
      * @param array $popularMovies
@@ -46,14 +30,10 @@ class MoviesViewModel extends ViewModel
      * @param array $genres
      */
     public function __construct(
-        array $popularMovies,
-        array $nowPlayingMovies,
-        array $genres
-    ) {
-        $this->popularMovies = $popularMovies;
-        $this->nowPlayingMovies = $nowPlayingMovies;
-        $this->genres = $genres;
-    }
+        public array $popularMovies,
+        public array $nowPlayingMovies,
+        public array $genres,
+    ) {}
 
     /**
      * Gets popular movies

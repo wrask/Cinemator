@@ -65,20 +65,13 @@ class MovieViewModel extends ViewModel
     const CAST_IMAGES_API_ENDPOINT = 'https://image.tmdb.org/t/p/w300';
 
     /**
-     * @var array
-     */
-    public array $movie;
-
-    /**
      * MovieViewModel constructor.
      *
      * @param array $movie
      */
     public function __construct(
-        array $movie
-    ) {
-        $this->movie = $movie;
-    }
+        public array $movie,
+    ) {}
 
     /**
      * Gets movies collection

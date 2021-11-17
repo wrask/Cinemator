@@ -100,21 +100,6 @@ class ActorViewModel extends ViewModel
     const MOVIE_MEDIA_TYPE = 'movie';
 
     /**
-     * @var array
-     */
-    public array $actor;
-
-    /**
-     * @var array
-     */
-    public array $social;
-
-    /**
-     * @var array
-     */
-    public array $credits;
-
-    /**
      * ActorViewModel constructor.
      *
      * @param array $actor
@@ -122,14 +107,10 @@ class ActorViewModel extends ViewModel
      * @param array $credits
      */
     public function __construct(
-        array $actor,
-        array $social,
-        array $credits
-    ) {
-        $this->actor = $actor;
-        $this->social = $social;
-        $this->credits = $credits;
-    }
+        public array $actor,
+        public array $social,
+        public array $credits,
+    ) {}
 
     /**
      * Gets actors collection

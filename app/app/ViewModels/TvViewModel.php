@@ -23,21 +23,6 @@ class TvViewModel extends ViewModel
     const POSTER_PATH = 'https://image.tmdb.org/t/p/w500/';
 
     /**
-     * @var array
-     */
-    public array $popularTv;
-
-    /**
-     * @var array
-     */
-    public array $topRatedTv;
-
-    /**
-     * @var array
-     */
-    public array $genres;
-
-    /**
      * TvViewModel constructor.
      *
      * @param array $popularTv
@@ -45,14 +30,10 @@ class TvViewModel extends ViewModel
      * @param array $genres
      */
     public function __construct(
-        array $popularTv,
-        array $topRatedTv,
-        array $genres
-    ) {
-        $this->popularTv = $popularTv;
-        $this->topRatedTv = $topRatedTv;
-        $this->genres = $genres;
-    }
+        public array $popularTv,
+        public array $topRatedTv,
+        public array $genres,
+    ) {}
 
     /**
      * Gets popular tvs collection

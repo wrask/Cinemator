@@ -58,20 +58,13 @@ class TvShowViewModel extends ViewModel
     const PROFILE_PLACEHOLDER_PATH = 'https://via.placeholder.com/300x450';
 
     /**
-     * @var array
-     */
-    public array $tvShow;
-
-    /**
      * TvShowViewModel constructor.
      *
      * @param array $tvShow
      */
     public function __construct(
-        array $tvShow
-    ) {
-        $this->tvShow = $tvShow;
-    }
+        public array $tvShow,
+    ) {}
 
     /**
      * Gets Tv shows collection
