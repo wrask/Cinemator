@@ -2,27 +2,22 @@
 
 namespace App\View\Components;
 
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Collection;
 use Illuminate\View\Component;
-use Illuminate\View\View;
 
 class TvCard extends Component
 {
-    /**
-     * TvCard constructor.
-     *
-     * @param Collection $tvShow
-     */
     public function __construct(
-        public Collection $tvShow,
+        public readonly Collection $tvShow,
     ) {}
 
     /**
      * Get the view / contents that represent the component.
-     *
-     * @return View|string
      */
-    public function render()
+    public function render(): View|Factory|Application
     {
         return view('components.tv-card');
     }

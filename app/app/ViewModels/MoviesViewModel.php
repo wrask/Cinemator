@@ -13,32 +13,23 @@ class MoviesViewModel extends ViewModel
      *
      * @var string
      */
-    const DATE_FORMAT = 'M d, Y';
+    private const DATE_FORMAT = 'M d, Y';
 
     /**
      * Images api endpoint
      *
      * @var string
      */
-    const IMAGES_API_ENDPOINT = 'https://image.tmdb.org/t/p/w500/';
+    private const IMAGES_API_ENDPOINT = 'https://image.tmdb.org/t/p/w500/';
 
-    /**
-     * MoviesViewModel constructor.
-     *
-     * @param array $popularMovies
-     * @param array $nowPlayingMovies
-     * @param array $genres
-     */
     public function __construct(
-        public array $popularMovies,
-        public array $nowPlayingMovies,
-        public array $genres,
+        public readonly array $popularMovies,
+        public readonly array $nowPlayingMovies,
+        public readonly array $genres,
     ) {}
 
     /**
      * Gets popular movies
-     *
-     * @return Collection
      */
     public function popularMovies(): Collection
     {
@@ -47,8 +38,6 @@ class MoviesViewModel extends ViewModel
 
     /**
      * Gets now playing movies
-     *
-     * @return Collection
      */
     public function nowPlayingMovies(): Collection
     {
@@ -57,16 +46,12 @@ class MoviesViewModel extends ViewModel
 
     /**
      * Gets formatted movies
-     *
-     * @param array $movies
-     * @return Collection
      */
     private function getFormattedMovies(array $movies): Collection
     {
         return collect($movies)->map(function($movie) {
-            $formattedGenres = collect($movie['genre_ids'])->mapWithKeys(function ($value) {
-                return [$value => $this->genres()->get($value)];
-            })->implode(', ');
+            $formattedGenres = collect($movie['genre_ids'])
+                ->mapWithKeys(fn($value) => [$value => $this->genres()->get($value)])->implode(', ');
 
             return collect($movie)->merge([
                 'poster_path' => self::IMAGES_API_ENDPOINT . $movie['poster_path'],
@@ -83,13 +68,9 @@ class MoviesViewModel extends ViewModel
 
     /**
      * Gets genres
-     *
-     * @return Collection
      */
     public function genres(): Collection
     {
-        return collect($this->genres)->mapWithKeys(function ($genre) {
-            return [$genre['id'] => $genre['name']];
-        });
+        return collect($this->genres)->mapWithKeys(fn($genre) => [$genre['id'] => $genre['name']]);
     }
 }

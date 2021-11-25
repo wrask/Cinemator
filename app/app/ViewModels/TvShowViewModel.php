@@ -13,63 +13,56 @@ class TvShowViewModel extends ViewModel
      *
      * @var string
      */
-    const DATE_FORMAT = 'M d, Y';
+    private const DATE_FORMAT = 'M d, Y';
 
     /**
      * Cast number
      *
      * @var int
      */
-    const CAST_NUMBER = 5;
+    private const CAST_NUMBER = 5;
 
     /**
      * Tv show images number
      *
      * @var int
      */
-    const TV_SHOW_IMAGES_NUMBER = 9;
+    private const TV_SHOW_IMAGES_NUMBER = 9;
 
     /**
      * Tv show poster path
      *
      * @var string
      */
-    const TV_SHOW_POSTER_PATH = 'https://image.tmdb.org/t/p/w500/';
+    private const TV_SHOW_POSTER_PATH = 'https://image.tmdb.org/t/p/w500/';
 
     /**
      * Tv show placeholder path
      *
      * @var string
      */
-    const TV_SHOW_PLACEHOLDER_PATH = 'https://via.placeholder.com/500x750';
+    private const TV_SHOW_PLACEHOLDER_PATH = 'https://via.placeholder.com/500x750';
 
     /**
      * Profile path
      *
      * @var string
      */
-    const PROFILE_PATH = 'https://image.tmdb.org/t/p/w300';
+    private const PROFILE_PATH = 'https://image.tmdb.org/t/p/w300';
 
     /**
      * Profile placeholder path
      *
      * @var string
      */
-    const PROFILE_PLACEHOLDER_PATH = 'https://via.placeholder.com/300x450';
+    private const PROFILE_PLACEHOLDER_PATH = 'https://via.placeholder.com/300x450';
 
-    /**
-     * TvShowViewModel constructor.
-     *
-     * @param array $tvShow
-     */
     public function __construct(
-        public array $tvShow,
+        public readonly array $tvShow,
     ) {}
 
     /**
      * Gets Tv shows collection
-     *
-     * @return Collection
      */
     public function tvShow(): Collection
     {
@@ -80,13 +73,12 @@ class TvShowViewModel extends ViewModel
             'vote_average' => $this->tvShow['vote_average'] * 10 . '%',
             'first_air_date' => Carbon::parse($this->tvShow['first_air_date'])->format(self::DATE_FORMAT),
             'genres' => collect($this->tvShow['genres'])->pluck('name')->flatten()->implode(', '),
-            'cast' => collect($this->tvShow['credits']['cast'])->take(self::CAST_NUMBER)->map(function($cast) {
-                return collect($cast)->merge([
-                    'profile_path' => $cast['profile_path']
-                        ? self::PROFILE_PATH . $cast['profile_path']
-                        : self::PROFILE_PLACEHOLDER_PATH,
-                ]);
-            }),
+            'cast' => collect($this->tvShow['credits']['cast'])->take(self::CAST_NUMBER)
+                ->map(fn($cast) => collect($cast)->merge([
+                'profile_path' => $cast['profile_path']
+                    ? self::PROFILE_PATH . $cast['profile_path']
+                    : self::PROFILE_PLACEHOLDER_PATH,
+            ])),
             'images' => collect($this->tvShow['images']['backdrops'])->take(self::TV_SHOW_IMAGES_NUMBER),
         ])->only([
             'poster_path', 'id', 'genres', 'name',

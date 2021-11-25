@@ -5,10 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
-use Illuminate\Http\Request;
 use App\ViewModels\TvViewModel;
 use App\ViewModels\TvShowViewModel;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Http;
 
 class TvController extends Controller
@@ -18,49 +16,49 @@ class TvController extends Controller
      *
      * @var string
      */
-    const TMDB_TOKEN = 'services.tmdb.token';
+    private const TMDB_TOKEN = 'services.tmdb.token';
 
     /**
      * TMDB version 3 endpoint
      *
      * @var string
      */
-    const TMDB_V3_ENDPOINT = 'https://api.themoviedb.org/3/';
+    private const TMDB_V3_ENDPOINT = 'https://api.themoviedb.org/3/';
 
     /**
      * TV popular api request
      *
      * @var string
      */
-    const TV_POPULAR_API_REQUEST = 'tv/popular';
+    private const TV_POPULAR_API_REQUEST = 'tv/popular';
 
     /**
      * TV top rated api request
      *
      * @var string
      */
-    const TV_TOP_RATED_API_REQUEST = 'tv/top_rated';
+    private const TV_TOP_RATED_API_REQUEST = 'tv/top_rated';
 
     /**
      * Genre tv list api api request
      *
      * @var string
      */
-    const GENRE_TV_LIST_API_REQUEST = 'genre/tv/list';
+    private const GENRE_TV_LIST_API_REQUEST = 'genre/tv/list';
 
     /**
      * Append to request
      *
      * @var string
      */
-    const APPEND_TO_RESPONSE = '?append_to_response=';
+    private const APPEND_TO_RESPONSE = '?append_to_response=';
 
     /**
      * Request parameters to append
      *
      * @var array
      */
-    const REQUEST_PARAMETERS_TO_APPEND = [
+    private const REQUEST_PARAMETERS_TO_APPEND = [
         'credits',
         'videos',
         'images',
@@ -68,8 +66,6 @@ class TvController extends Controller
 
     /**
      * Display the specified resource
-     *
-     * @return Application|Factory|View
      */
     public function index(): View|Factory|Application
     {
@@ -95,31 +91,7 @@ class TvController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param Request $request
-     * @return Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
      * Display the specified resource
-     *
-     * @param int $id
-     * @return Application|Factory|View
      */
     public function show(int $id): View|Factory|Application
     {
@@ -134,39 +106,5 @@ class TvController extends Controller
         $tvShowViewModel = new TvShowViewModel($tvShow);
 
         return view('tv.show', $tvShowViewModel);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param Request $request
-     * @param  int  $id
-     * @return Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 }

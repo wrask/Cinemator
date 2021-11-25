@@ -8,69 +8,50 @@ use Spatie\ViewModels\ViewModel;
 class ActorsViewModel extends ViewModel
 {
     /**
-     * Date format
-     *
-     * @var string
-     */
-    const DATE_FORMAT = 'M d, Y';
-
-    /**
      * Images api endpoint
      *
      * @var string
      */
-    const IMAGES_API_ENDPOINT = 'https://image.tmdb.org/t/p/w235_and_h235_face';
+    private const IMAGES_API_ENDPOINT = 'https://image.tmdb.org/t/p/w235_and_h235_face';
 
     /**
      * Actor avatar placeholder path
      *
      * @var string
      */
-    const ACTOR_AVATAR_PLACEHOLDER_PATH = 'https://ui-avatars.com/api/?size=235&name';
+    private const ACTOR_AVATAR_PLACEHOLDER_PATH = 'https://ui-avatars.com/api/?size=235&name';
 
     /**
      * Max actors pages number
      *
      * @var int
      */
-    const MAX_ACTORS_PAGES_NUMBER = 500;
+    private const MAX_ACTORS_PAGES_NUMBER = 500;
 
-    /**
-     * ActorsViewModel constructor.
-     *
-     * @param array $popularActors
-     * @param int $page
-     */
     public function __construct(
-        public array $popularActors,
-        public int $page,
+        public readonly array $popularActors,
+        public readonly int $page,
     ) {}
 
     /**
      * Gets popular actors
-     *
-     * @return Collection
      */
     public function popularActors(): Collection
     {
-        return collect($this->popularActors)->map(function($actor) {
-            return collect($actor)->merge([
-                'profile_path' => $actor['profile_path'] ?
-                    self::IMAGES_API_ENDPOINT . $actor['profile_path'] :
-                    self::ACTOR_AVATAR_PLACEHOLDER_PATH . $actor['name'],
-                'known_for' => collect($actor['known_for'])->where('media_type', 'movie')->pluck('title')->union(
-                    collect($actor['known_for'])->where('media_type', 'tv')->pluck('name')
-                )->implode(', '),
-            ])->only([
-                'name', 'id', 'profile_path', 'known_for',
-            ]);
-        });
+        return collect($this->popularActors)->map(fn($actor) => collect($actor)->merge([
+            'profile_path' => $actor['profile_path'] ?
+                self::IMAGES_API_ENDPOINT . $actor['profile_path'] :
+                self::ACTOR_AVATAR_PLACEHOLDER_PATH . $actor['name'],
+            'known_for' => collect($actor['known_for'])->where('media_type', 'movie')->pluck('title')->union(
+                collect($actor['known_for'])->where('media_type', 'tv')->pluck('name')
+            )->implode(', '),
+        ])->only([
+            'name', 'id', 'profile_path', 'known_for',
+        ]));
     }
 
     /**
      * Gets previous page
-     *
-     * @return int|null
      */
     public function previous(): ?int
     {
@@ -79,8 +60,6 @@ class ActorsViewModel extends ViewModel
 
     /**
      * Gets next page
-     *
-     * @return int|null
      */
     public function next(): ?int
     {

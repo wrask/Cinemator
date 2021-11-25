@@ -15,47 +15,42 @@ class SearchDropdown extends Component
      *
      * @var string
      */
-    const TMDB_TOKEN = 'services.tmdb.token';
+    private const TMDB_TOKEN = 'services.tmdb.token';
 
     /**
      * TMDB version 3 endpoint
      *
      * @var string
      */
-    const TMDB_V3_ENDPOINT = 'https://api.themoviedb.org/3/';
+    private const TMDB_V3_ENDPOINT = 'https://api.themoviedb.org/3/';
 
     /**
      * Popular movies api request
      *
      * @var string
      */
-    const SEARCH_MOVIE_API_REQUEST = 'search/movie?query=';
+    private const SEARCH_MOVIE_API_REQUEST = 'search/movie?query=';
 
     /**
      * Minimum search string length
      *
      * @var int
      */
-    const MINIMUM_SEARCH_STRING_LENGTH = 2;
+    private const MINIMUM_SEARCH_STRING_LENGTH = 2;
 
     /**
      * Search results number
      *
      * @var int
      */
-    const SEARCH_RESULTS_NUMBER = 7;
+    private const SEARCH_RESULTS_NUMBER = 7;
 
-    /**
-     * @var string
-     */
     public string $search = '';
 
     /**
      * Renders search results
-     *
-     * @return Application|Factory|View
      */
-    public function render()
+    public function render(): View|Factory|Application
     {
         $searchResults = [];
 

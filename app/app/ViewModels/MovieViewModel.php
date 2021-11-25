@@ -13,70 +13,63 @@ class MovieViewModel extends ViewModel
      *
      * @var int
      */
-    const CREW_MEMBERS_NUMBER = 3;
+    private const CREW_MEMBERS_NUMBER = 3;
 
     /**
      * Cast number
      *
      * @var int
      */
-    const CAST_NUMBER = 5;
+    private const CAST_NUMBER = 5;
 
     /**
      * Images number
      *
      * @var int
      */
-    const IMAGES_NUMBER = 9;
+    private const IMAGES_NUMBER = 9;
 
     /**
      * Date format
      *
      * @var string
      */
-    const DATE_FORMAT = 'M d, Y';
+    private const DATE_FORMAT = 'M d, Y';
 
     /**
      * Poster image placeholder url
      *
      * @var string
      */
-    const POSTER_IMAGE_PLACEHOLDER_URL = 'https://via.placeholder.com/500x750';
+    private const POSTER_IMAGE_PLACEHOLDER_URL = 'https://via.placeholder.com/500x750';
 
     /**
      * Cast image placeholder url
      *
      * @var string
      */
-    const CAST_IMAGE_PLACEHOLDER_URL = 'https://via.placeholder.com/300x450';
+    private const CAST_IMAGE_PLACEHOLDER_URL = 'https://via.placeholder.com/300x450';
 
     /**
      * Poster images api endpoint
      *
      * @var string
      */
-    const POSTER_IMAGES_API_ENDPOINT = 'https://image.tmdb.org/t/p/w500/';
+    private const POSTER_IMAGES_API_ENDPOINT = 'https://image.tmdb.org/t/p/w500/';
 
     /**
      * Cast images api endpoint
      *
      * @var string
      */
-    const CAST_IMAGES_API_ENDPOINT = 'https://image.tmdb.org/t/p/w300';
+    private const CAST_IMAGES_API_ENDPOINT = 'https://image.tmdb.org/t/p/w300';
 
-    /**
-     * MovieViewModel constructor.
-     *
-     * @param array $movie
-     */
     public function __construct(
-        public array $movie,
+        public readonly array $movie,
     ) {}
 
     /**
      * Gets movies collection
-     *
-     * @return Collection
      */
     public function movie(): Collection
     {
@@ -88,13 +81,12 @@ class MovieViewModel extends ViewModel
             'release_date' => Carbon::parse($this->movie['release_date'])->format(self::DATE_FORMAT),
             'genres' => collect($this->movie['genres'])->pluck('name')->flatten()->implode(', '),
             'crew' => collect($this->movie['credits']['crew'])->take(self::CREW_MEMBERS_NUMBER),
-            'cast' => collect($this->movie['credits']['cast'])->take(self::CAST_NUMBER)->map(function($cast) {
-                return collect($cast)->merge([
-                    'profile_path' => $cast['profile_path']
-                        ? self::CAST_IMAGES_API_ENDPOINT . $cast['profile_path']
-                        : self::CAST_IMAGE_PLACEHOLDER_URL,
-                ]);
-            }),
+            'cast' => collect($this->movie['credits']['cast'])->take(self::CAST_NUMBER)
+                ->map(fn($cast) => collect($cast)->merge([
+                'profile_path' => $cast['profile_path']
+                    ? self::CAST_IMAGES_API_ENDPOINT . $cast['profile_path']
+                    : self::CAST_IMAGE_PLACEHOLDER_URL,
+            ])),
             'images' => collect($this->movie['images']['backdrops'])->take(self::IMAGES_NUMBER),
         ])->only([
             'poster_path', 'id', 'genres', 'title', 'vote_average',

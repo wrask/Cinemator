@@ -10,21 +10,14 @@ use Illuminate\View\Component;
 
 class MovieCard extends Component
 {
-    /**
-     * Create a new component instance.
-     *
-     * @param Collection $movie
-     */
     public function __construct(
-        public Collection $movie,
+        public readonly Collection $movie,
     ) {}
 
     /**
      * Get the view / contents that represent the component.
-     *
-     * @return Application|Factory|View
      */
-    public function render()
+    public function render(): View|Factory|Application
     {
         return view('components.movie-card');
     }

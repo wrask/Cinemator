@@ -13,32 +13,23 @@ class TvViewModel extends ViewModel
      *
      * @var string
      */
-    const DATE_FORMAT = 'M d, Y';
+    private const DATE_FORMAT = 'M d, Y';
 
     /**
      * Poster path
      *
      * @var string
      */
-    const POSTER_PATH = 'https://image.tmdb.org/t/p/w500/';
+    private const POSTER_PATH = 'https://image.tmdb.org/t/p/w500/';
 
-    /**
-     * TvViewModel constructor.
-     *
-     * @param array $popularTv
-     * @param array $topRatedTv
-     * @param array $genres
-     */
     public function __construct(
-        public array $popularTv,
-        public array $topRatedTv,
-        public array $genres,
+        public readonly array $popularTv,
+        public readonly array $topRatedTv,
+        public readonly array $genres,
     ) {}
 
     /**
      * Gets popular tvs collection
-     *
-     * @return Collection
      */
     public function popularTv(): Collection
     {
@@ -46,9 +37,7 @@ class TvViewModel extends ViewModel
     }
 
     /**
-     * Gets popular toprated tv collection
-     *
-     * @return Collection
+     * Gets popular top_rated tv collection
      */
     public function topRatedTv(): Collection
     {
@@ -57,28 +46,20 @@ class TvViewModel extends ViewModel
 
     /**
      * Gets genres collection
-     *
-     * @return Collection
      */
     public function genres(): Collection
     {
-        return collect($this->genres)->mapWithKeys(function ($genre) {
-            return [$genre['id'] => $genre['name']];
-        });
+        return collect($this->genres)->mapWithKeys(fn($genre) => [$genre['id'] => $genre['name']]);
     }
 
     /**
      * Gets formatted tvs collection
-     *
-     * @param array $tv
-     * @return Collection
      */
     private function formatTv(array $tv): Collection
     {
         return collect($tv)->map(function($tvShow) {
-            $formattedGenres = collect($tvShow['genre_ids'])->mapWithKeys(function($value) {
-                return [$value => $this->genres()->get($value)];
-            })->implode(', ');
+            $formattedGenres = collect($tvShow['genre_ids'])
+                ->mapWithKeys(fn($value) => [$value => $this->genres()->get($value)])->implode(', ');
 
             return collect($tvShow)->merge([
                 'poster_path' => self::POSTER_PATH . $tvShow['poster_path'],

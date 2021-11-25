@@ -1,4 +1,4 @@
-FROM php:8-fpm
+FROM devilbox/php-fpm-8.1:latest
 
 # Arguments defined in docker-compose.yml
 ARG user

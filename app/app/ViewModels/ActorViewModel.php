@@ -13,109 +13,100 @@ class ActorViewModel extends ViewModel
      *
      * @var string
      */
-    const DATE_FORMAT = 'M d, Y';
+    private const DATE_FORMAT = 'M d, Y';
 
     /**
      * Twitter url
      *
      * @var string
      */
-    const TWITTER_URL = 'https://twitter.com/';
+    private const TWITTER_URL = 'https://twitter.com/';
 
     /**
      * Facebook url
      *
      * @var string
      */
-    const FACEBOOK_URL = 'https://facebook.com/';
+    private const FACEBOOK_URL = 'https://facebook.com/';
 
     /**
      * Instagram url
      *
      * @var string
      */
-    const INSTAGRAM_URL = 'https://instagram.com/';
+    private const INSTAGRAM_URL = 'https://instagram.com/';
 
     /**
      * Known for movies number
      *
      * @var int
      */
-    const KNOWN_FOR_MOVIES_NUMBER = 5;
+    private const KNOWN_FOR_MOVIES_NUMBER = 5;
 
     /**
      * Future release date
      *
      * @var string
      */
-    const FUTURE_RELEASE_DATE = 'Future';
+    private const FUTURE_RELEASE_DATE = 'Future';
 
     /**
      * Release date format
      *
      * @var string
      */
-    const RELEASE_DATE_FORMAT = 'Y';
+    private const RELEASE_DATE_FORMAT = 'Y';
 
     /**
      * Untitled movie name
      *
      * @var string
      */
-    const UNTITLED_MOVIE_NAME = 'Untitled';
+    private const UNTITLED_MOVIE_NAME = 'Untitled';
 
     /**
      * Actor image path
      *
      * @var string
      */
-    const ACTOR_IMAGE_PATH = 'https://image.tmdb.org/t/p/w300/';
+    private const ACTOR_IMAGE_PATH = 'https://image.tmdb.org/t/p/w300/';
 
     /**
      * Actor image placeholder path
      *
      * @var string
      */
-    const ACTOR_IMAGE_PLACEHOLDER_PATH = 'https://via.placeholder.com/300x450';
+    private const ACTOR_IMAGE_PLACEHOLDER_PATH = 'https://via.placeholder.com/300x450';
 
     /**
      * Poster image path
      *
      * @var string
      */
-    const POSTER_IMAGE_PATH = 'https://image.tmdb.org/t/p/w300';
+    private const POSTER_IMAGE_PATH = 'https://image.tmdb.org/t/p/w300';
 
     /**
      * Poster placeholder path
      *
      * @var string
      */
-    const POSTER_PLACEHOLDER_PATH = 'https://via.placeholder.com/185x278';
+    private const POSTER_PLACEHOLDER_PATH = 'https://via.placeholder.com/185x278';
 
     /**
      * Movie media type
      *
      * @var string
      */
-    const MOVIE_MEDIA_TYPE = 'movie';
+    private const MOVIE_MEDIA_TYPE = 'movie';
 
-    /**
-     * ActorViewModel constructor.
-     *
-     * @param array $actor
-     * @param array $social
-     * @param array $credits
-     */
     public function __construct(
-        public array $actor,
-        public array $social,
-        public array $credits,
+        public readonly  array $actor,
+        public readonly array $social,
+        public readonly array $credits,
     ) {}
 
     /**
      * Gets actors collection
-     *
-     * @return Collection
      */
     public function actor(): Collection
     {
@@ -133,8 +124,6 @@ class ActorViewModel extends ViewModel
 
     /**
      * Gets social collection
-     *
-     * @return Collection
      */
     public function social(): Collection
     {
@@ -149,8 +138,6 @@ class ActorViewModel extends ViewModel
 
     /**
      * Gets knownForMovies collection
-     *
-     * @return Collection
      */
     public function knownForMovies(): Collection
     {
@@ -181,8 +168,6 @@ class ActorViewModel extends ViewModel
 
     /**
      * Gets credits collection
-     *
-     * @return Collection
      */
     public function credits(): Collection
     {
