@@ -56,7 +56,7 @@ class MoviesViewModel extends ViewModel
             return collect($movie)->merge([
                 'poster_path' => self::IMAGES_API_ENDPOINT . $movie['poster_path'],
                 'vote_average' => $movie['vote_average'] * 10 . '%',
-                'release_date' => Carbon::parse($movie['release_date'])->format(DATE_FORMAT),
+                'release_date' => Carbon::parse($movie['release_date'])->format(self::DATE_FORMAT),
                 'genres' => $formattedGenres,
             ])->only([
                 'poster_path', 'id', 'genre_ids',
