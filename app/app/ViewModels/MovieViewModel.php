@@ -74,7 +74,7 @@ class MovieViewModel extends ViewModel
     public function movie(): Collection
     {
         return collect($this->movie)->merge([
-            'poster_path' => $this->movie['poster_path']
+            'poster_path' => $this->movie['poster_path'] ?? null
                 ? self::POSTER_IMAGES_API_ENDPOINT . $this->movie['poster_path']
                 : self::POSTER_IMAGE_PLACEHOLDER_URL,
             'vote_average' => $this->movie['vote_average'] * 10 .'%',
