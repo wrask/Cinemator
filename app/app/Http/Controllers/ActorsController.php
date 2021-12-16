@@ -95,7 +95,7 @@ class ActorsController extends Controller
     /**
      * Show actor controller
      */
-    public function show(int|string $actorId): View|Factory|Application
+    public function show(int $actorId): View|Factory|Application
     {
         $actor = Http::withToken(config(self::TMDB_TOKEN))
             ->get(self::TMDB_V3_ENDPOINT . self::PERSON_API_REQUEST . $actorId)
