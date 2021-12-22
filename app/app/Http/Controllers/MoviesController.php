@@ -103,6 +103,10 @@ class MoviesController extends Controller
                 implode(',', self::REQUEST_PARAMETERS_TO_APPEND))
             ->json();
 
+        if (isset($movie['success']) && !$movie['success']) {
+            return abort(404);
+        }
+
         $movieViewModel = new MovieViewModel($movie);
 
         return view('movies.show', $movieViewModel);
