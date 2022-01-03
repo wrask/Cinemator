@@ -100,6 +100,10 @@ class ActorsController extends Controller
         $actor = Http::withToken(config(self::TMDB_TOKEN))
             ->get(self::TMDB_V3_ENDPOINT . self::PERSON_API_REQUEST . $actorId)
             ->json();
+        
+        if (isset($actor['success']) && !$actor['success']) {
+          return abort(404);
+        }
 
         $social = Http::withToken(config(self::TMDB_TOKEN))
             ->get(
