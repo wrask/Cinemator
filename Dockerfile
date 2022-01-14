@@ -20,11 +20,19 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 # Install PHP extensions
 RUN docker-php-ext-install \
     pdo_mysql \
-    mbstring \ 
-    exif \ 
-    pcntl \ 
+    mbstring \
+    exif \
+    pcntl \
     bcmath \
     gd
+
+# Copy php.ini config
+COPY config/php/php.ini /usr/local/etc/php/
+
+# Install Xdebug
+RUN pecl channel-update pecl.php.net \
+  && pecl install -f xdebug \
+  && docker-php-ext-enable xdebug
 
 # Get latest Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
@@ -35,6 +43,6 @@ RUN mkdir -p /home/$user/.composer && \
     chown -R $user:$user /home/$user
 
 # Set working directory
-WORKDIR /var/www
+WORKDIR /var/www/app
 
 USER $user
