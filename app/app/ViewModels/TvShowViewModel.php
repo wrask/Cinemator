@@ -67,17 +67,17 @@ class TvShowViewModel extends ViewModel
     public function tvShow(): Collection
     {
         return collect($this->tvShow)->merge([
-            'poster_path' => $this->tvShow['poster_path'] ?? null
-                ? self::TV_SHOW_POSTER_PATH . $this->tvShow['poster_path']
-                : self::TV_SHOW_PLACEHOLDER_PATH,
+            'poster_path' => $this->tvShow['poster_path'] ?? null ?
+                    self::TV_SHOW_POSTER_PATH . $this->tvShow['poster_path'] :
+                    self::TV_SHOW_PLACEHOLDER_PATH,
             'vote_average' => $this->tvShow['vote_average'] * 10 . '%',
             'first_air_date' => Carbon::parse($this->tvShow['first_air_date'])->format(self::DATE_FORMAT),
             'genres' => collect($this->tvShow['genres'])->pluck('name')->flatten()->implode(', '),
             'cast' => collect($this->tvShow['credits']['cast'])->take(self::CAST_NUMBER)
                 ->map(fn($cast) => collect($cast)->merge([
-                'profile_path' => $cast['profile_path']
-                    ? self::PROFILE_PATH . $cast['profile_path']
-                    : self::PROFILE_PLACEHOLDER_PATH,
+                'profile_path' => $cast['profile_path'] ?
+                    self::PROFILE_PATH . $cast['profile_path'] :
+                    self::PROFILE_PLACEHOLDER_PATH,
             ])),
             'images' => collect($this->tvShow['images']['backdrops'])->take(self::TV_SHOW_IMAGES_NUMBER),
         ])->only([

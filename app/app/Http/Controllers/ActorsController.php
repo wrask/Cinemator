@@ -87,7 +87,10 @@ class ActorsController extends Controller
             )
             ->json('results');
 
-        $actorsViewModel = new ActorsViewModel($popularActors, $page);
+        $actorsViewModel = new ActorsViewModel(
+            popularActors: $popularActors,
+            page: $page
+        );
 
         return view('actors.index', $actorsViewModel);
     }
@@ -100,7 +103,7 @@ class ActorsController extends Controller
         $actor = Http::withToken(config(self::TMDB_TOKEN))
             ->get(self::TMDB_V3_ENDPOINT . self::PERSON_API_REQUEST . $actorId)
             ->json();
-        
+
         if (isset($actor['success']) && !$actor['success']) {
           return abort(404);
         }
@@ -123,7 +126,11 @@ class ActorsController extends Controller
             )
             ->json();
 
-        $actorViewModel = new ActorViewModel($actor, $social, $credits);
+        $actorViewModel = new ActorViewModel(
+            actor: $actor,
+            social: $social,
+            credits: $credits
+        );
 
         return view('actors.show', $actorViewModel);
     }

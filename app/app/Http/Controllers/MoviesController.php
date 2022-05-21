@@ -82,9 +82,9 @@ class MoviesController extends Controller
             ->json('genres');
 
         $moviesViewModel = new MoviesViewModel(
-            $popularMovies,
-            $nowPlayingMovies,
-            $genres
+            popularMovies: $popularMovies,
+            nowPlayingMovies: $nowPlayingMovies,
+            genres: $genres,
         );
 
         return view('movies.index', $moviesViewModel);
@@ -107,7 +107,7 @@ class MoviesController extends Controller
             return abort(404);
         }
 
-        $movieViewModel = new MovieViewModel($movie);
+        $movieViewModel = new MovieViewModel(movie: $movie);
 
         return view('movies.show', $movieViewModel);
     }

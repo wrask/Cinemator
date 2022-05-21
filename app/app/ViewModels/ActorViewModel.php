@@ -113,9 +113,9 @@ class ActorViewModel extends ViewModel
         return collect($this->actor)->merge([
             'birthday' => Carbon::parse($this->actor['birthday'])->format(self::DATE_FORMAT),
             'age' => Carbon::parse($this->actor['birthday'])->age,
-            'profile_path' => $this->actor['profile_path']
-                ? self::ACTOR_IMAGE_PATH . $this->actor['profile_path']
-                : self::ACTOR_IMAGE_PLACEHOLDER_PATH,
+            'profile_path' => $this->actor['profile_path'] ?
+                self::ACTOR_IMAGE_PATH . $this->actor['profile_path'] :
+                self::ACTOR_IMAGE_PLACEHOLDER_PATH,
         ])->only([
             'birthday', 'age', 'profile_path', 'name',
             'id', 'homepage', 'place_of_birth', 'biography'

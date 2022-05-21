@@ -89,9 +89,9 @@ class MovieViewModel extends ViewModel
         $images = isset($this->movie['images']['backdrops']) ? collect($this->movie['images']['backdrops'])->take(self::IMAGES_NUMBER) : null;
 
         return collect($this->movie)->merge([
-            'poster_path' => $this->movie['poster_path'] ?? null
-                ? self::POSTER_IMAGES_API_ENDPOINT . $this->movie['poster_path']
-                : self::POSTER_IMAGE_PLACEHOLDER_URL,
+            'poster_path' => $this->movie['poster_path'] ?? null ?
+                    self::POSTER_IMAGES_API_ENDPOINT . $this->movie['poster_path'] :
+                    self::POSTER_IMAGE_PLACEHOLDER_URL,
             'vote_average' => $voteAverage,
             'release_date' => $releaseDate,
             'genres' => $genres,

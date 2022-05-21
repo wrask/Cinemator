@@ -82,9 +82,9 @@ class TvController extends Controller
             ->json('genres');
 
         $tvViewModel = new TvViewModel(
-            $popularTv,
-            $topRatedTv,
-            $genres,
+            popularTv: $popularTv,
+            topRatedTv: $topRatedTv,
+            genres: $genres,
         );
 
         return view('tv.index', $tvViewModel);
@@ -103,7 +103,7 @@ class TvController extends Controller
                 implode(',', self::REQUEST_PARAMETERS_TO_APPEND))
             ->json();
 
-        $tvShowViewModel = new TvShowViewModel($tvShow);
+        $tvShowViewModel = new TvShowViewModel(tvShow: $tvShow);
 
         return view('tv.show', $tvShowViewModel);
     }

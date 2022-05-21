@@ -33,7 +33,7 @@ class TvViewModel extends ViewModel
      */
     public function popularTv(): Collection
     {
-        return $this->formatTv($this->popularTv);
+        return $this->formatTv(tv: $this->popularTv);
     }
 
     /**
@@ -41,7 +41,7 @@ class TvViewModel extends ViewModel
      */
     public function topRatedTv(): Collection
     {
-        return $this->formatTv($this->topRatedTv);
+        return $this->formatTv(tv: $this->topRatedTv);
     }
 
     /**
