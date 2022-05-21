@@ -67,7 +67,7 @@ class TvShowViewModel extends ViewModel
     public function tvShow(): Collection
     {
         return collect($this->tvShow)->merge([
-            'poster_path' => $this->tvShow['poster_path']
+            'poster_path' => $this->tvShow['poster_path'] ?? null
                 ? self::TV_SHOW_POSTER_PATH . $this->tvShow['poster_path']
                 : self::TV_SHOW_PLACEHOLDER_PATH,
             'vote_average' => $this->tvShow['vote_average'] * 10 . '%',
