@@ -4,6 +4,7 @@ services:
  # Laravel App
   phpfpm:
     container_name: ${APP_CONTAINER}
+    restart: unless-stopped
     build:
       args:
         user: ${LOCAL_USER}
@@ -19,6 +20,7 @@ services:
   # Nginx Service
   nginx:
     container_name: ${WEB_CONTAINER}
+    restart: unless-stopped
     image: nginx:alpine
     ports:
       - ${WEB_PORT}:80
