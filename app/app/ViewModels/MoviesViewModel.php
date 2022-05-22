@@ -63,7 +63,7 @@ class MoviesViewModel extends ViewModel
                 'title', 'vote_average', 'overview',
                 'release_date', 'genres',
             ]);
-        });
+        })->sortBy([['vote_average', 'desc']]);
     }
 
     /**

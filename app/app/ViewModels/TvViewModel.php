@@ -71,6 +71,6 @@ class TvViewModel extends ViewModel
                 'name', 'vote_average', 'overview',
                 'first_air_date', 'genres',
             ]);
-        });
+        })->sortBy([['vote_average', 'desc']]);
     }
 }
