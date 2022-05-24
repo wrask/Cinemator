@@ -103,7 +103,7 @@ class MoviesController extends Controller
                 implode(',', self::REQUEST_PARAMETERS_TO_APPEND))
             ->json();
 
-        if (isset($movie['success']) && !$movie['success']) {
+        if (isResponseValid($movie)) {
             return abort(404);
         }
 

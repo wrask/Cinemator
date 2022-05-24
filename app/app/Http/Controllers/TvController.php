@@ -103,6 +103,10 @@ class TvController extends Controller
                 implode(',', self::REQUEST_PARAMETERS_TO_APPEND))
             ->json();
 
+        if (isResponseValid($tvShow)) {
+            return abort(404);
+        }
+
         $tvShowViewModel = new TvShowViewModel(tvShow: $tvShow);
 
         return view('tv.show', $tvShowViewModel);
